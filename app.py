@@ -1,7 +1,8 @@
 import os
-from hashids import Hashids
-from flask import Flask, jsonify, request
+
+from flask import Flask, request
 from flask_sqlalchemy import SQLAlchemy
+from hashids import Hashids
 from werkzeug.exceptions import abort
 
 app = Flask(__name__)
@@ -19,9 +20,6 @@ class Url(db.Model):
     decoded = db.Column(db.String(512), nullable=False)
     encoded = db.Column(db.String(512), nullable=False)
 
-    def __repr__(self):
-        return '<Url %r>' % self.value
-
 
 db.drop_all()
 db.create_all()
@@ -30,7 +28,6 @@ db.session.commit()
 
 @app.route('/', methods=('PUT',))
 def encode():
-
     d = request.form['encode']
     if len(d) < 1:
         abort(400, "No URL provided to encode")
@@ -54,7 +51,6 @@ def encode():
 
 @app.route('/<string:value>', methods=('GET',))
 def decode(value):
-
     if len(value) < 1:
         abort(400, "No URL provided to decode")
 
