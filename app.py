@@ -48,7 +48,8 @@ def encode():
     url = Url(decoded=d, encoded=e)
     db.session.add(url)
     db.session.commit()
-    return url.encoded
+
+    return 'http://localhost:5050/' + url.encoded
 
 
 @app.route('/<string:value>', methods=('GET',))
